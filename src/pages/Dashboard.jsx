@@ -1,77 +1,59 @@
-import { useEffect } from "react";
+import React from "react";
+import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../context/Authcontext'; 
+import Sidebar from "../Components/Sidebar";
+
+
+
+
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const mockEvents = [
-    {
-      id: 1,
-      title: "Concerto de Rock",
-      category: "Concertos",
-      city: "Santa Maria",
-      date: "2025-06-08",
-      featured: true,
-      image:
-        "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: 2,
-      title: "Teatro Infantil",
-      category: "Teatro",
-      city: "Porto",
-      date: "2025-06-16",
-      featured: false,
-      image:
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: 3,
-      title: "Conferência Tech",
-      category: "Conferências",
-      city: "Praia",
-      date: "2025-07-02",
-      featured: true,
-      image:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: 4,
-      title: "Jogo de Futebol",
-      category: "Desportos",
-      city: "Mindelo",
-      date: "2025-06-13",
-      featured: false,
-      image:
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
-    },
-  ];
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+  const { setUser } = useAuth();
+  const navigate =useNavigate()
 
-    if (!token) {
-      // Se não tiver token, redireciona para Login
-      navigate('/login');
-    }
-  }, [navigate]);
-
+  const handleLogout = () => {
+  setUser(null);
+        // Redirecionar para Dashboard ou página protegida
+ window.location.href = '/'; // Ajusta conforme teu projeto
+};
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-gray-200">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
-        <h1 className="text-3xl font-bold mb-4 text-green-600"> Bem-vindo à sua Dashboard!</h1>
-        <p className="text-gray-600">Pagina para ver e criar eventos  .</p>
+    <>
+      <Navbar />
+      <div className="flex min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
+        {/* Sidebar */}
+        <Sidebar onLogout={handleLogout}/>
 
-        
+        {/* Main Content */}
+        <main className="flex-1 p-6 md:p-12 flex flex-col gap-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-indigo-600 mb-2">
+            Dashboard Principal
+          </h1>
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 rounded-xl shadow-lg p-6 flex flex-col items-center">
+              <span className="text-2xl font-bold text-blue-700 mb-2">24</span>
+              <span className="text-gray-700 mb-1 font-semibold">Eventos Ativos</span>
+              <button className="mt-4 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full font-semibold hover:brightness-110 transition duration-300" onClick={navigate("/events")}>Ver eventos</button>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 rounded-xl shadow-lg p-6 flex flex-col items-center">
+              <span className="text-2xl font-bold text-blue-700 mb-2">158</span>
+              <span className="text-gray-700 mb-1 font-semibold">Usuários</span>
+              <button className="mt-4 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full font-semibold hover:brightness-110 transition duration-300">Ver usuários</button>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 via-white to-blue-100 rounded-xl shadow-lg p-6 flex flex-col items-center">
+              <span className="text-2xl font-bold text-blue-700 mb-2">3</span>
+              <span className="text-gray-700 mb-1 font-semibold">Eventos Pendentes</span>
+              <button className="mt-4 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full font-semibold hover:brightness-110 transition duration-300">Rever eventos</button>
+            </div>
+          </div>
 
-        <button
-          onClick={() => {
-            localStorage.removeItem('token');
-            navigate('/login');
-          }}
-          className="mt-6 py-2 px-6 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-        >
-          Logout
-        </button>
+          {/* Seção estendida do dashboard (extra) */}
+          <div className="hidden md:block bg-white rounded-xl shadow p-8 mt-8">
+            <h2 className="text-xl font-semibold text-gray-700 mb-3">Resumo</h2>
+            <p className="text-gray-500">Aqui você pode adicionar gráficos, tabelas ou outras informações importantes do painel.</p>
+          </div>
+        </main>
       </div>
-    </div>
+    </>
   );
 }
