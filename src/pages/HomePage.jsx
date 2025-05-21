@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 
+
+
 // Dados mockados de eventos
 const mockEvents = [
   {
@@ -77,7 +79,7 @@ export default function HomePage() {
 
   return (
     <>
-      
+       <Navbar />
       <main className="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen pb-10">
         <section className="max-w-6xl mx-auto py-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-indigo-600 mb-6 text-center">
@@ -164,7 +166,7 @@ export default function HomePage() {
                     <div className="text-xs text-gray-500 mb-1">{event.category} - {event.city}</div>
                     <h3 className="font-bold text-lg text-gray-800">{event.title}</h3>
                     <p className="text-gray-600 text-sm mb-2">{event.date}</p>
-                    <button className="mt-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full font-semibold hover:brightness-110 transition duration-300">
+                    <button className="mt-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-full font-semibold hover:brightness-110 transition duration-300" >
                       Reservar
                     </button>
                   </div>

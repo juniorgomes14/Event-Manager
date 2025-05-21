@@ -1,13 +1,20 @@
 
 import React, { useState } from "react";
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/Authcontext';// ajuste o caminho conforme sua pasta
+import { useNavigate } from "react-router-dom";
+
+
 
 
 export default function LoginPage() {
+  const navegate = useNavigate
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword ] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const { setUser } = useAuth();
+
  
 
   const handleSubmit = async(e) => {
@@ -31,10 +38,12 @@ export default function LoginPage() {
         toast.success("Login successful! 🎉");
 
         // Guardar o token no localStorage
-        localStorage.setItem('token', data.token);
+       localStorage.setItem('token', data.token);
 
         // Redirecionar para Dashboard ou página protegida
-        window.location.href = '/dasboard'; // Ajusta conforme teu projeto
+        navegate.replace('/dashboard') ; // Ajusta conforme teu projeto
+        setUser({ name: data.name, email: data.email, role: data.role});
+        console.log("token",data.token)
       } else {
         toast.error(data.message);
       }
